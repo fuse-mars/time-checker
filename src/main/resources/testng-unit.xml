@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Unit">
+
+	<test name="model">
+		<classes>
+			<class name="me.marcellin.timechecker.api.v1.time.TestTimeModel" />
+		</classes>
+	</test>
+
+	<test name="service">
+		<classes>
+			<class name="me.marcellin.timechecker.api.v1.time.TestTimeService" />
+		</classes>
+	</test>
+
+</suite>

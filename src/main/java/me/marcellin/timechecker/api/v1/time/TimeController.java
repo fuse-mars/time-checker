@@ -1,6 +1,7 @@
 package me.marcellin.timechecker.api.v1.time;
 
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/time")
 public class TimeController {
-
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
  
     @Autowired
     private TimeService timeService;
@@ -23,8 +21,8 @@ public class TimeController {
         @PathVariable String queryCity, 
         @RequestParam(value="time", defaultValue="8:00 AM") String time,
                             @RequestParam(value="city", defaultValue="New York") String city) {
-        Date dateTime = timeService.stringToDate(time);
-        return timeService.checkTimeByCity(queryCity, new TimeModel(dateTime, city));
+        
+        return timeService.checkTimeByCity(queryCity, time, city);
         // => return TimeModel<{ time: computedTime, city: queryCity }>
     }
 }

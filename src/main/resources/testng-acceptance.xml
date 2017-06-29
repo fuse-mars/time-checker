@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Acceptance">
+
+	<test name="checkTime">
+		<classes>
+			<class name="me.marcellin.timechecker.api.v1.time.TimeController" />
+		</classes>
+	</test>
+
+</suite>

@@ -8,8 +8,8 @@ import java.util.Date;
  */
 public class TimeModel {
 
-    public Date time;
-    public String city;
+    private Date time;
+    private String city;
 
     TimeModel(Date time, String city) {
         this.time = time;

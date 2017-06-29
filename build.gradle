@@ -30,4 +30,22 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.testng:testng:6.10')
+}
+
+def unitTest = project.hasProperty("unit")
+def acceptanceTest = project.hasProperty("acceptance")
+test {
+  // enable TestNG support (default is JUnit)
+  // source: https://stackoverflow.com/questions/43606992/run-a-specific-testng-xml-test-suite-with-gradle-from-command-line
+    useTestNG() {
+
+        if(unitTest) {
+            suites "src/main/resources/testng-unit.xml"
+        }
+
+        if(acceptanceTest) {
+            suites "src/main/resources/testng-acceptence.xml"
+        }
+    }
 }

@@ -2,9 +2,13 @@ package me.marcellin.timechecker.api.v1.time;
 
 import org.springframework.stereotype.Service;
 
+import me.marcellin.timechecker.util.UTCOffset;
+import me.marcellin.timechecker.util.UTCOffsetStore;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
  * 
  * @author Marcellin<mars@fusemachines.com>
@@ -14,21 +18,29 @@ import java.util.Date;
  */
 @Service
 public class TimeService {
+    private UTCOffsetStore utcOffsetStore;
 
     TimeService() {
+        this.utcOffsetStore = new UTCOffsetStore();
     }
 
-/**
- * we compute time in one city based the given time in another city
- * @param base TimeModel the base
- */
-    public TimeModel checkTimeByCity(String city, TimeModel base) {
-        Date time = 
-        return new TimeModel(time, city);
+    public TimeModel checkTimeByCity(String queryCity, String time, String city) {
+        Date dateTime = this.stringToDate(time);
+        return this._checkTimeByCity(queryCity, new TimeModel(dateTime, city));
     }
 
-    public UTCOffset findUTCOffset(String city) {
-        
+    /**
+     * we compute time in one city based the given time in another city
+     * @param base TimeModel the base
+     */
+    public TimeModel _checkTimeByCity(String city, TimeModel base) {
+        UTCOffset cityUTCOffset = this.utcOffsetStore.findUTCOffset(city);
+        UTCOffset baseUTCOffset = this.utcOffsetStore.findUTCOffset(base.getCity());
+        int hours = base.getTime().getHours() + cityUTCOffset.getHours() + baseUTCOffset.getHours();
+        int minutes = base.getTime().getMinutes() + cityUTCOffset.getMinutes() + baseUTCOffset.getMinutes();
+
+        Date dateTime = this.stringToDate(Integer.valueOf(hours).toString() + Integer.valueOf(minutes).toString());
+        return new TimeModel(dateTime, city);
     }
 
     /**
