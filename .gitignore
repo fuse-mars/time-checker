@@ -25,4 +25,4 @@ nbdist/
 .nb-gradle/
 
 # credentials
-.gradle/gradle.properties
+gradle-sonarqube.sh
