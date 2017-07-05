@@ -6,10 +6,7 @@ import me.marcellin.timechecker.util.TimeManipulator;
 import me.marcellin.timechecker.util.UTCOffset;
 import me.marcellin.timechecker.util.UTCOffsetStore;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 
@@ -42,7 +39,7 @@ public class TimeService {
         int minutes = base.getTime().getMinute() + cityUTCOffset.getMinutes() + baseUTCOffset.getMinutes();
 
         // @TODO will fails because stringToTime expects input of the format "h:mm:ss a"
-        LocalDateTime dateTime = TimeManipulator.stringToTime(Integer.valueOf(hours).toString() + Integer.valueOf(minutes).toString()+":00");
+        LocalDateTime dateTime = TimeManipulator.stringToTime(Integer.toString(hours) + Integer.toString(minutes)+":00");
         
         return new TimeModel(dateTime, city);
     }
