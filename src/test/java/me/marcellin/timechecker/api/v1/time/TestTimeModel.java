@@ -1,45 +1,42 @@
 package me.marcellin.timechecker.api.v1.time;
 
-import java.util.Date;
-import java.util.Locale;
-import java.text.ParseException;
+import java.time.LocalDateTime;
 
-import org.springframework.format.datetime.DateFormatter;
+// import java.util.Date;
+// import java.util.Locale;
+// import java.text.ParseException;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import me.marcellin.timechecker.util.TimeManipulator;
 
 public class TestTimeModel {
 
 	@Test()
-	public void testEmailGenerator() {
+	public void testModelCreation() {
 
 		// START simulated environment
+		// INPUT city, time		
 		String city = "New York";
-		String stringTime = "9:30 AM";
+		int expectedHrs = 9;
+		int expectedMins = 30;
+		String stringTime = expectedHrs+":"+expectedMins+":00 AM"; // => "9:30:00 AM";
 
-		Date time;
+		LocalDateTime time = TimeManipulator.stringToTime(stringTime);
 
-		DateFormatter timeFormatter;
-		TimeModel obj = null;
-		try {
-
-			timeFormatter = new DateFormatter();
-			time = timeFormatter.parse(stringTime, Locale.ENGLISH);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		// INPUT city, time
 		// END simulated environment
 
+
 		// START system
-		obj = new TimeModel(time, city);
+		TimeModel obj = new TimeModel(time, city);
+		System.out.println(obj.toString());
 		// END system
 
 		Assert.assertNotNull(obj);
 		Assert.assertEquals(obj.getCity(), city);
-		System.out.println(obj.getTime().getHours());
-		Assert.assertEquals(obj.getTime().getHours(), 9);
+		Assert.assertEquals(obj.getTime().getHour(), expectedHrs);
+		Assert.assertEquals(obj.getTime().getMinute(), expectedMins);
 
 	}
 

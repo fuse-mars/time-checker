@@ -39,7 +39,7 @@ test {
   // enable TestNG support (default is JUnit)
   // source: https://stackoverflow.com/questions/43606992/run-a-specific-testng-xml-test-suite-with-gradle-from-command-line
     useTestNG() {
-
+		useDefaultListeners = true
         if(unitTest) {
             suites "src/main/resources/testng-unit.xml"
         }
@@ -48,4 +48,18 @@ test {
             suites "src/main/resources/testng-acceptence.xml"
         }
     }
+
+
+  // show standard out and standard error of the test JVM(s) on the console
+  testLogging.showStandardStreams = true
+  // listen to events in the test execution lifecycle
+  beforeTest { descriptor ->
+     logger.lifecycle(" ========= START ========= \n Running test: " + descriptor)
+  }
+
+  // listen to standard out and standard error of the test JVM(s)
+    afterTest { desc, result -> 
+        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}  \n ========= END ========= "
+    }
+
 }

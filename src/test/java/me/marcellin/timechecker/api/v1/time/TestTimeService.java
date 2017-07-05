@@ -1,37 +1,25 @@
 package me.marcellin.timechecker.api.v1.time;
 
-import java.util.Date;
-import java.util.Locale;
-import java.text.ParseException;
+import java.time.LocalDateTime;
 
-import org.springframework.format.datetime.DateFormatter;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestTimeService {
 
 	@Test()
-	public void testEmailGenerator() {
+	public void testTimeServiceCreation() {
+		// START simulated environment
+		// String queryCity = "New York";
+		// String city = "Kathmandu";
+		// String time = "9:30 AM";
 
-		String city = "New York";
-		DateFormatter timeFormatter;
-		Date time = null;
-		TimeModel obj = null;
-		try {
+		// END simulated environment
 
-			timeFormatter = new DateFormatter();
-			time = timeFormatter.parse("9:30 AM", Locale.ENGLISH);
+		TimeService ts = new TimeService();
+		Assert.assertNotNull(ts);
+		// ts.checkTimeByCity(queryCity, time, city);
 
-			obj = new TimeModel(time, city);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Assert.assertNotNull(obj);
-		Assert.assertEquals(obj.getCity(), city);
-		System.out.println(obj.getTime().getHours());
-		Assert.assertEquals(obj.getTime().getHours(), 9);
 
 	}
 

@@ -1,6 +1,6 @@
 package me.marcellin.timechecker.api.v1.time;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * We are modeling a time in a given city
@@ -8,10 +8,10 @@ import java.util.Date;
  */
 public class TimeModel {
 
-    private Date time;
+    private LocalDateTime time;
     private String city;
 
-    TimeModel(Date time, String city) {
+    TimeModel(LocalDateTime time, String city) {
         this.time = time;
         this.city = city;
     }
@@ -19,13 +19,13 @@ public class TimeModel {
     /**
      * time getter
      */
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return this.time;
     }
     /**
      * time setter
      */
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
