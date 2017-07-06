@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.M2'
+		springBootVersion = "2.0.0.M2"
 	}
 	repositories {
 		mavenCentral()
@@ -12,16 +12,18 @@ buildscript {
 	}
 }
 // https://plugins.gradle.org/plugin/org.sonarqube
+// https://stackoverflow.com/questions/31528033/sonarqube-class-not-found-during-main-ast-scan
 plugins {
   id "org.sonarqube" version "2.5"
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "jacoco"
 
-version = '0.0.1-SNAPSHOT'
+version = "0.0.1-SNAPSHOT"
 sourceCompatibility = 1.8
 
 repositories {
@@ -32,9 +34,11 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.testng:testng:6.10')
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("com.google.code.findbugs:jsr305:3.0.0") // @TODO how to compile this only during sonarqube analysis 
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("org.testng:testng:6.10")
+	testRuntime("org.codehaus.sonar-plugins.java:sonar-jacoco-listeners:1.3")
 }
 
 def unitTest = project.hasProperty("unit")
@@ -62,8 +66,27 @@ test {
   }
 
   // listen to standard out and standard error of the test JVM(s)
-    afterTest { desc, result -> 
-        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}  \n ========= END ========= "
-    }
+  afterTest { desc, result -> 
+    println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}  \n ========= END ========= "
+  }
 
+  // START code coverage
+  // https://stackoverflow.com/questions/41643727/how-to-use-jacoco-gradle-plugin-with-testng-and-junit
+  // https://discuss.gradle.org/t/provide-support-for-per-unit-test-coverage-reports-in-sonarqube/397
+  options {
+    listeners << "org.sonar.java.jacoco.TestNGListener"
+  }
+  jacoco {
+    destinationFile = file("$buildDir/jacoco/test.exec")
+  }
+  // END code coverage
+}
+
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacoco/html"
+    }
 }
