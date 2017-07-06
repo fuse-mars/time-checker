@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter;
  * @source https://stackoverflow.com/questions/25223553/how-can-i-create-an-utility-class
  */
 public final class TimeManipulator {
+    private TimeManipulator() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * @param input String value to be converted into date ex: "9:30:12 AM"
@@ -29,9 +32,7 @@ public final class TimeManipulator {
             dateNow = dateNow.withMinute(formatTime.getMinute());
             dateNow = dateNow.withSecond(formatTime.getSecond());
 
-
             System.out.println("After : " + dateNow.format(formatter));
-
 
         } catch (DateTimeException e) {
             e.printStackTrace();
