@@ -25,6 +25,18 @@ Find out the local time of remote cities
 ./gradlew test
 ```
 
+# Coverage report
+```
+# creating report
+./gradlew clean jacocoTestReport
+
+# sending report to sonarQube
+./gradlew clean sonarqube \
+       -Dsonar.host.url=https://sonarcloud.io \
+       -Dsonar.organization=<sonarqube-org> \
+       -Dsonar.login=<sonarqube-token>
+```
+
 # Contribution
 Always create a new branch from `develop`, before making any major change
 ```sh
