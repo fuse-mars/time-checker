@@ -6,7 +6,7 @@ Find out the local time of remote cities
 -- Application.java
 -- util
  | -- Timemanipulator.java
--- api/v1/
+-- api/v1/time
  | -- TimeModel.java
  | -- TimeService.java
  | -- TimeController.java
