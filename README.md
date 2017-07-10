@@ -4,9 +4,12 @@ Find out the local time of remote cities
 # Code Structure
 ```sh
 -- Application.java
--- -- TimeModel.java
--- -- TimeService.java
--- -- TimeController.java
+-- util
+ | -- Timemanipulator.java
+-- api/v1/
+ | -- TimeModel.java
+ | -- TimeService.java
+ | -- TimeController.java
 ```
 
 # Running locally
