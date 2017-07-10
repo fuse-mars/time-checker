@@ -3,6 +3,7 @@ Find out the local time of remote cities
 
 # Code Structure
 ```sh
+# assume you are inside src folder
 -- Application.java
 -- util
  | -- Timemanipulator.java
