@@ -22,7 +22,7 @@ Find out the local time of remote cities
 # Testing
 ```sh
 # terminal
-./gradlew test
+./gradlew test -Punit
 ```
 
 # Coverage report
