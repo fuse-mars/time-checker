@@ -18,15 +18,56 @@ public final class TimeManipulator {
      * @return {LocalDateTime} the today's date that has input time
      */
     public static LocalDateTime stringToTime(String input) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm:ss a");
+        DateTimeFormatter formatter;
+        LocalTime formatTime;
+        try {
+            formatter = DateTimeFormatter.ofPattern("h:mm a");
+            formatTime = LocalTime.parse(input, formatter);
+        } catch (Exception e1) {
+            try {
+                formatter = DateTimeFormatter.ofPattern("h:mm:ss a");
+                formatTime = LocalTime.parse(input, formatter);
+            } catch (Exception e2) {
+                try {
+                    formatter = DateTimeFormatter.ofPattern("h:mm");
+                    formatTime = LocalTime.parse(input, formatter);
+                } catch (Exception e3) {
+                    try {
+                        formatter = DateTimeFormatter.ofPattern("h:mm:ss");
+                        formatTime = LocalTime.parse(input, formatter);
+                    } catch (Exception e4) {
+                        try {
+                            formatter = DateTimeFormatter.ofPattern("hh:mm a");
+                            formatTime = LocalTime.parse(input, formatter);
+                        } catch (Exception e5) {
+                            try {
+                                formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+                                formatTime = LocalTime.parse(input, formatter);
+                            } catch (Exception e6) {
+                                try {
+                                    formatter = DateTimeFormatter.ofPattern("hh:mm");
+                                    formatTime = LocalTime.parse(input, formatter);
+                                } catch (Exception e7) {
+                                    try {
+                                        formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+                                        formatTime = LocalTime.parse(input, formatter);
+                                    } catch (Exception e8) {
+                                        e6.printStackTrace();
+                                        return null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         LocalDateTime dateNow = LocalDateTime.now();
 
         try {
             // @TODO use remote logging system
             System.out.println("Before : " + dateNow.format(formatter));
-
-            LocalTime formatTime = LocalTime.parse(input, formatter);
 
             dateNow = dateNow.withHour(formatTime.getHour());
             dateNow = dateNow.withMinute(formatTime.getMinute());
