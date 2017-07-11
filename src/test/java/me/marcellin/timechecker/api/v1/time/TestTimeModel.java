@@ -1,6 +1,7 @@
 package me.marcellin.timechecker.api.v1.time;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // import java.util.Date;
 // import java.util.Locale;
@@ -19,24 +20,22 @@ public class TestTimeModel {
 		// START simulated environment
 		// INPUT city, time		
 		String city = "New York";
-		int expectedHrs = 9;
-		int expectedMins = 30;
-		String stringTime = expectedHrs+":"+expectedMins+":00 AM"; // => "9:30:00 AM";
+		String expectedTime = "9:30 AM";
 
-		LocalDateTime time = TimeManipulator.stringToTime(stringTime);
+		LocalDateTime time = TimeManipulator.stringToTime(expectedTime);
 
 		// END simulated environment
 
 
 		// START system
 		TimeModel obj = new TimeModel(time, city);
-		System.out.println(obj.toString());
+				System.err.printf("[model] <%s>\n", obj);
+
 		// END system
 
 		Assert.assertNotNull(obj);
 		Assert.assertEquals(obj.getCity(), city);
-		Assert.assertEquals(obj.getTime().getHour(), expectedHrs);
-		Assert.assertEquals(obj.getTime().getMinute(), expectedMins);
+		Assert.assertEquals(obj.toTimeString(), expectedTime);
 
 	}
 
